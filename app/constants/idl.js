@@ -1,0 +1,180 @@
+export const IDL = {
+    version: "0.1.0",
+    name: "web3_linkedin",
+    constants: [
+      {
+        name: "USER_TAG",
+        type: "bytes",
+        value: "[85, 83, 69, 82, 95, 83, 84, 65, 84, 69]"
+      }
+    ],
+    instructions: [
+      {
+        name: "initialize",
+        accounts: [
+          {
+            name: "authority",
+            isMut: true,
+            isSigner: true
+          },
+          {
+            name: "userProfile",
+            isMut: true,
+            isSigner: false
+          },
+          {
+            name: "systemProgram",
+            isMut: false,
+            isSigner: false
+          }
+        ],
+        args: [
+          {
+            name: "name",
+            type: "string"
+          }
+        ]
+      },
+      {
+        name: "sendFriendRequest",
+        accounts: [
+          {
+            name: "friendProfile",
+            isMut: true,
+            isSigner: false
+          },
+          {
+            name: "senderAuthority",
+            isMut: true,
+            isSigner: true
+          },
+          {
+            name: "senderProfile",
+            isMut: true,
+            isSigner: false
+          }
+        ],
+        args: []
+      },
+      {
+        name: "acceptFriendRequest",
+        accounts: [
+          {
+            name: "senderProfile",
+            isMut: true,
+            isSigner: false
+          },
+          {
+            name: "userProfile",
+            isMut: true,
+            isSigner: false
+          },
+          {
+            name: "authority",
+            isMut: true,
+            isSigner: true
+          }
+        ],
+        args: []
+      },
+      {
+        name: "rejectFriendRequest",
+        accounts: [
+          {
+            name: "authority",
+            isMut: true,
+            isSigner: true
+          },
+          {
+            name: "userProfile",
+            isMut: true,
+            isSigner: false
+          },
+          {
+            name: "senderProfile",
+            isMut: true,
+            isSigner: false
+          }
+        ],
+        args: []
+      },
+      {
+        name: "removeFromSentRequest",
+        accounts: [
+          {
+            name: "authority",
+            isMut: true,
+            isSigner: true
+          },
+          {
+            name: "userProfile",
+            isMut: true,
+            isSigner: false
+          },
+          {
+            name: "deleteWho",
+            isMut: true,
+            isSigner: false
+          }
+        ],
+        args: []
+      },
+      {
+        name: "removeFriend",
+        accounts: [
+          {
+            name: "authority",
+            isMut: true,
+            isSigner: true
+          },
+          {
+            name: "userProfile",
+            isMut: true,
+            isSigner: false
+          },
+          {
+            name: "deleteWho",
+            isMut: true,
+            isSigner: false
+          }
+        ],
+        args: []
+      }
+    ],
+    accounts: [
+      {
+        name: "UserProfile",
+        type: {
+          kind: "struct",
+          fields: [
+            {
+              name: "authority",
+              type: "publicKey"
+            },
+            {
+              name: "name",
+              type: "string"
+            },
+            {
+              name: "friends",
+              type: {
+                vec: "publicKey"
+              }
+            },
+            {
+              name: "pendingRequestsSent",
+              type: {
+                vec: "publicKey"
+              }
+            },
+            {
+              name: "pendingRequestsReceived",
+              type: {
+                vec: "publicKey"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }

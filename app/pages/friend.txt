@@ -1,0 +1,100 @@
+// MainPage.js
+import React, { useState } from 'react';
+import Navbar from '../components/navbar/Navbar';
+import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+import { useUserProfile } from '../hooks/todo';
+
+const FriendsPage = () => {
+    const [friendRequest, setFriendRequest] = useState('');
+    const [acceptFriend, setAcceptFriend] = useState('');
+    
+    const { initialized, initializeUser, loading, transactionPending, sendFriendRequest, acceptFriendRequest, friends, name, requests, sentRequests } = useUserProfile();
+
+    const handleSendFriendRequest = () => {
+        if (friendRequest.trim() !== '') {
+            sendFriendRequest(friendRequest.trim());
+        }
+    };
+
+    const handleAcceptFriendRequest = () => {
+        if (acceptFriend.trim() !== '') {
+            acceptFriendRequest(acceptFriend.trim());
+        }
+    }
+
+    return (
+        <div>
+            <Navbar />
+            <h1 className='text-center'>This is the Friends Page!</h1>
+            <div className="flex justify-around">
+                
+                    
+
+
+
+                    <div className='flex flex-col gap-5 w-1/4'>
+                            <label className="text-lg font-bold mt-5">Sent</label>
+                        <input
+                            type="text"
+                            className="h-10 p-3 border rounded-md border-slate-200"
+                            value={friendRequest}
+                            onChange={(e) => setFriendRequest(e.target.value)}
+                        />
+                        <button 
+                            type="button"
+                            className="bg-sky-900 w-1/3 rounded-md hover:bg-sky-800 text-white text-lg"
+                            onClick={handleSendFriendRequest}
+                        >
+                            Send Friend Request
+                        </button>
+                        <div>
+                            <h2>Pending Requests Sent:</h2>
+                            <ul>
+                                {sentRequests.map((sentRequests, index) => (
+                                    <li key={index}>{sentRequests}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+
+
+
+
+                    <div className='flex flex-col gap-5 w-1/4'>
+                            <label className="text-lg font-bold mt-5">Accept</label>
+                        <input
+                            type="text"
+                            className=" h-10 p-3 border rounded-md border-slate-200"
+                            value={acceptFriend}
+                            onChange={(e) => setAcceptFriend(e.target.value)}
+                        />
+                        <button
+                            type="button"
+                            className="bg-sky-900 w-1/3 rounded-md hover:bg-sky-800 text-white text-lg"
+                            onClick={handleAcceptFriendRequest}
+                        >
+                            Accept Friend Request
+                        </button>
+                        <div>
+                            <h2>Pending Requests Received:</h2>
+                            <ul>
+                                {requests.map((request, index) => (
+                                    <li key={index}>{request}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+            </div>
+
+            <ul className='text-center mt-16'>
+                <p className='text-lg font-bold'>Friends:</p>
+                {friends.map((friends, index) => (
+                    <li key={index}>{friends}</li>
+                ))}
+            </ul>
+
+        </div>
+    );
+};
+
+export default FriendsPage;

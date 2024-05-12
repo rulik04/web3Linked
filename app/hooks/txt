@@ -1,0 +1,61 @@
+import { useState } from 'react'
+import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
+import { useUserProfile } from '../hooks/todo'
+import styles from '../styles/Home.module.css'
+import Navbar from '../components/navbar/Navbar'
+
+const Home = () => {
+    const [username, setUsername] = useState('')
+    const [friendRequest, setFriendRequest] = useState('')
+    const { initialized, initializeUser, loading, transactionPending, sendFriendRequest, name } = useUserProfile()
+
+    const handleInitializeUser = () => {
+        if (username.trim() !== '') {
+            initializeUser(username.trim())
+        }
+    }
+
+    const handleSendFriendRequest = () => {
+        if (friendRequest.trim() !== '') {
+            sendFriendRequest(friendRequest.trim())
+        }
+    }
+
+    return (
+        <div className={styles.container}>
+            <Navbar />
+            <div className="flex justify-between mt-5 mb-10">
+                {initialized ? 
+                    (
+                    <span>Welcome, {name} </span>
+                    ) : 
+                    (<div>
+                        <label className="text-lg font-bold flex mb-2">Username</label>
+                        <input 
+                            type="text" 
+                            className="w-1/3 h-10 p-3 border rounded-md border-slate-200 mr-2" 
+                            value={username} 
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                        <button 
+                            type="button" 
+                            className="bg-gray-400 w-24 h-10 rounded-md" 
+                            onClick={handleInitializeUser} 
+                            
+                        >
+                            Initialize
+                        </button>
+                    </div>
+                    )
+                }
+                <WalletMultiButton />
+            </div>
+
+            <label className="text-lg font-bold mt-5">friend request</label>
+            <input type='text'  className="w-1/3 h-10 p-3 border rounded-md border-slate-200"  value={friendRequest} onChange={(e) => setFriendRequest(e.target.value)} />
+            <button     type="button"  className="bg-gray-400 w-24 h-24 rounded-md"  onClick={handleSendFriendRequest}>Send friend request</button>
+        </div> 
+    )
+}
+
+export default Home
