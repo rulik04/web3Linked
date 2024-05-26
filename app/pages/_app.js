@@ -5,6 +5,8 @@ import '@solana/wallet-adapter-react-ui/styles.css'
 import { useUserProfile } from '../hooks/todo'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router';
+
+
 function MyApp({ Component, pageProps }) {
     return (
         <>

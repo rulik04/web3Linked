@@ -3,12 +3,31 @@ import React from 'react';
 import Navbar from '../components/navbar/Navbar';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { useUserProfile } from '../hooks/todo'; 
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import Post from '../components/post/Post';
 
 const ProfilePage = () => {
     
-    const { initialized, initializeUser, loading, transactionPending, sendFriendRequest, acceptFriendRequest, friends, name, requests, sentRequests } = useUserProfile();
+    const { initialized,loading, transactionPending, friends, name, profilePicture, userPosts } = useUserProfile();
 
+    const router = useRouter();
 
+    userPosts.map((post) => {
+        console.log("user post", post)
+        console.log(typeof post.authority)
+        console.log(typeof post.createdAt)
+        console.log(typeof post.content)
+        console.log(typeof post.image)
+        console.log(typeof post.idx)
+
+    })
+
+    useEffect(() => {
+        if (name === '') {
+            router.push('/login');
+        }
+    }, [name]);
 
     return (
         <div>
@@ -16,19 +35,8 @@ const ProfilePage = () => {
             <h1 className="text-center text-xl font-bold mt-3">Your profile</h1>
             <main className="rounded-md my-5 mx-64 flex gap-5">
                 <div className="bg-lime-800 w-1/3 h-96 rounded-md flex flex-col items-center pt-5">
-                    <div className="bg-white w-24 h-24 rounded-full mb-3 flex justify-center items-center">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            class="w-6 h-6  "
-                        >
-                            <path
-                            fill-rule="evenodd"
-                            d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-5.5-2.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0ZM10 12a5.99 5.99 0 0 0-4.793 2.39A6.483 6.483 0 0 0 10 16.5a6.483 6.483 0 0 0 4.793-2.11A5.99 5.99 0 0 0 10 12Z"
-                            clip-rule="evenodd"
-                            />
-                        </svg>
+                    <div className="bg-white w-24 h-24   rounded-full mb-3 flex justify-center items-center">
+                        <img src={profilePicture} alt="profile picture" className="w-24 h-24 rounded-full object-cover" />
                     </div>
                     <span className="text-white text-2xl font-semibold mb-5">{name}</span>
                     <ul>
@@ -56,6 +64,21 @@ const ProfilePage = () => {
                     </ul>
                 </div>
             </main>
+            <div className="w-3/4"> 
+                    <div className="posts-container">
+                        {/* Map through the posts data and render Post component for each */}
+                        {userPosts.map((post, index) => (
+                            <Post
+                                key={index}
+                                profileName={name}
+                                profilePicture={profilePicture}
+                                content={post.content}
+                                postImage={post.image}
+                                createdTime={post.createdAt}
+                            />
+                        ))}
+                    </div>
+                </div>
         </div>
     );
 }

@@ -2,27 +2,34 @@
 import React, { useState } from 'react';
 import Navbar from '../components/navbar/Navbar';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+
+import SideBar from '../components/sidebar/SideBar';
+import Friends from '../components/friends/Friends';
 import { useUserProfile } from '../hooks/todo';
-
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 const FriendsPage = () => {
+    const { name } = useUserProfile();
+    const router = useRouter();
 
-    const { initialized, initializeUser, loading, removeFriend, transactionPending, sendFriendRequest, acceptFriendRequest, friends, name, requests, sentRequests } = useUserProfile();
-
+    useEffect(() => {
+        if (name === '') {
+            router.push('/login');
+        }
+    }, [name]);
 
     return (
         <div>
             <Navbar />
-            <h1 className='text-center'>This is the Friends Page!</h1>
-            <ul className='text-center mt-16 flex flex-col items-center'>
-                <p className='text-lg font-bold'>Friends:</p>
-                {friends.map((friends, index) => (
-                    <li key={index} className='bg-gray-500 w-1/2 mb-5 flex justify-between p-3'>
-                        <p>{friends}</p>
-                        <button className='bg-red-500 w-1/3 rounded-md hover:bg-red-400 text-white text-lg' onClick={() => removeFriend(friends)}>Remove Friend</button>
-                    </li>
-                ))}
-            </ul>
-
+            <h1 className='text-center mb-10 mt-5'>This is the Friends Page!</h1>
+            <div className='flex gap-5 justify-around'>
+                <div className='w-1/2'>
+                    <Friends/>
+                </div>
+                <div className='w-1/4'>
+                    <SideBar/>
+                </div>
+            </div>
         </div>
     );
 };

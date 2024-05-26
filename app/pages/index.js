@@ -18,12 +18,26 @@ const Home = () => {
         }
     }
 
+    // useEffect(() => {
+    //     if (router.pathname === '/' ) {
+    //         router.push('/main');
+    //     }
+
+    //     if (initialized) {
+    //         router.push('/main');
+    //     }
+    //     // console.log('initialized: ', initialized)
+
+    //     if (!initialized && router.pathname !== '/login') {
+    //         router.push('/login');
+    //     }
+    // });
+
     useEffect(() => {
-        if (router.pathname === '/' ) {
+        if(router.pathname === '/') {
             router.push('/main');
         }
-
-    });
+    }, [initialized]);
 
     return (
         <div className={styles.container}>
