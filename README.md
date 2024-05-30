@@ -36,6 +36,8 @@ To use the Solana Social Media platform:
     Create Account
   
     Go to "localhost:3000/main" to create post
+![main](https://github.com/rulik04/web3Linked/assets/120617465/92b288e5-042a-4e57-ae21-2be8daeecdb9)
+![register](https://github.com/rulik04/web3Linked/assets/120617465/fcbaa385-58f9-45a6-bb42-5f3c4f49c46a)
 
 ## Deployment
 
