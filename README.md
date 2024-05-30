@@ -24,6 +24,19 @@ To use the Solana Social Media platform:
 2. Navigate to the project directory.
 3. Install dependencies using `cargo build`.
 
+4. Installing(Frontend):
+    Clone repo into your local machine
+    Open folder web3Linked/app in terminal
+    Type "npm i" in terminal to download dependencies
+    Type "npm run dev" to start server
+
+  Usage:
+    Go into browser and go to "localhost:3000/login" to create account
+    Connect Your wallet
+    Create Account
+  
+    Go to "localhost:3000/main" to create post
+
 ## Deployment
 
 1. Deploy the Solana Social Media program on the Solana blockchain using tools like Anchor CLI or Solana CLI.
